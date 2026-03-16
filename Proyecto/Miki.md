@@ -48,7 +48,7 @@ Servidor Ubuntu
 - ├── VNC (acceso gráfico)
 - └── virsh (línea de comandos)
 
-text
+
 
 ---
 
@@ -69,6 +69,9 @@ kvm-ok
 
 sudo usermod -aG libvirt $USER
 sudo usermod -aG kvm $USER
+
+---
+
 ## 5. Problemas encontrados
 ## 5.1 Incompatibilidad de virtualización por hardware
 Problema: Al ejecutar kvm-ok se detectó que la CPU no soportaba virtualización por hardware.
@@ -85,6 +88,9 @@ Solución: Habilitar el anidamiento de virtualización en VirtualBox:
 # En Windows (PowerShell como administrador)
 & "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" list vms
 & "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" modifyvm "Qemu" --nested-hw-virt on
+
+
+
 ## 5.2 Limitaciones detectadas
 QEMU por sí solo no ofrece monitorización avanzada de las máquinas virtuales
 
@@ -93,6 +99,8 @@ Para monitorización completa es necesario usar virt-install y libvirt
 El acceso gráfico requiere configuración adicional de VNC
 
 Las máquinas creadas con QEMU directamente no se integran con las herramientas de monitorización estándar
+
+---
 
 ## 6. Gestión de máquinas virtuales
 ## 6.1 Creación de máquinas virtuales
@@ -136,6 +144,9 @@ Para configurar VNC en una VM existente:
 virsh edit nombre_vm
 # Añadir en la sección <devices>:
 # <graphics type='vnc' port='5900' autoport='yes' listen='0.0.0.0'/>
+
+---
+
 ## 7. Monitorización
 Para monitorizar las máquinas virtuales se pueden utilizar:
 
@@ -152,6 +163,8 @@ Configurar agentes de monitorización dentro de las VMs
 Utilizar soluciones externas como Prometheus + libvirt exporter
 
 Implementar un sistema de logging centralizado
+
+---
 
 ## 8. Conclusiones
 ## 8.1 Logros alcanzados
@@ -199,6 +212,8 @@ Explorar monitorización avanzada con Prometheus
 Probar diferentes sistemas operativos invitados
 
 Implementar backup y snapshot de las VMs
+
+---
 
 ## 9. Tecnologías utilizadas
 Tecnología	Versión	Uso
