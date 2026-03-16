@@ -35,19 +35,19 @@ Este proyecto consiste en el despliegue de una aplicación web contenerizada en 
 ---
 
 ## 3. Arquitectura
-Servidor Ubuntu 24.04
-│
-├── Docker Engine
-│ └── Contenedor: Aplicación Flask
-│ └── Puerto expuesto: 8080
-│
-├── Avahi (mDNS)
-│ └── Publica: alexander-santana.local:8080
-│
-└── Stack de monitorización
-├── cAdvisor (puerto 8081)
-├── Prometheus (puerto 9090)
-└── Grafana (puerto 3000)
+- Servidor Ubuntu 24.04
+- │
+- ├── Docker Engine
+- │ └── Contenedor: Aplicación Flask
+- │ └── Puerto expuesto: 8080
+- │
+- ├── Avahi (mDNS)
+- │ └── Publica: alexander-santana.local:8080
+- │
+- └── Stack de monitorización
+- ├── cAdvisor (puerto 8081)
+- ├── Prometheus (puerto 9090)
+- └── Grafana (puerto 3000)
 
 ---
 
