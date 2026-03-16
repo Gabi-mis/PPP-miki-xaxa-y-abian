@@ -36,17 +36,17 @@ Este proyecto consiste en la implementación de un **hipervisor mediante QEMU/KV
 
 ## 3. Arquitectura
 Servidor Ubuntu
-│
-├── QEMU/KVM (Hipervisor)
-│ ├── Máquina Virtual 1
-│ ├── Máquina Virtual 2
-│ └── ...
-│
-├── libvirt (Gestión de VMs)
-│
-└── Interfaces de gestión
-├── VNC (acceso gráfico)
-└── virsh (línea de comandos)
+-│
+-├── QEMU/KVM (Hipervisor)
+-│ ├── Máquina Virtual 1
+-│ ├── Máquina Virtual 2
+-│ └── ...
+-│
+-├── libvirt (Gestión de VMs)
+-│
+-└── Interfaces de gestión
+-├── VNC (acceso gráfico)
+-└── virsh (línea de comandos)
 
 text
 
