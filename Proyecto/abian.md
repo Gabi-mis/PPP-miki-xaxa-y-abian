@@ -1,109 +1,130 @@
-Planificación del trabajo (Lunes → Jueves)
- Lunes — Análisis de opciones y elección del método
-Objetivos del día:
+# Proyecto Contenedores en la Nube (AWS)  
+**Autor:** Abián García Martel  
+**Fecha:** Marzo 2026  
 
-Evaluar las distintas formas de trabajar con contenedores en AWS.
+---
 
-Determinar qué método se ajusta mejor al proyecto y al plan de estudios.
+## 📋 Índice  
+1. Introducción  
+2. Objetivos  
+3. Arquitectura  
+4. Instalación y configuración  
+5. Problemas encontrados  
+6. Gestión del contenedor  
+7. Monitorización  
+8. Conclusiones  
+9. Tecnologías utilizadas  
 
-Tareas realizadas:
+---
 
-Revisión de las alternativas disponibles en AWS:
+## 1. Introducción  
+Este proyecto consiste en la implementación de un contenedor en la nube utilizando **AWS EC2 + Podman**, en lugar de AWS ECS/Fargate.  
+La decisión se tomó para mantener **mayor control del entorno**, evitar ampliar el plan de AWS y **reducir costes**, aunque implique un proceso ligeramente más complejo.
 
-AWS ECS (Elastic Container Service).
+---
 
-AWS Fargate (contenedores sin servidor).
+## 2. Objetivos  
+- Estudiar el funcionamiento de los contenedores en la nube.  
+- Comparar distintos métodos de implementación en AWS.  
+- Elegir la opción más directa y económica.  
+- Crear un contenedor con una página web Apache.  
+- Ejecutarlo en una instancia EC2.  
+- Validar que la página se sirve desde el contenedor.  
 
-Instancia EC2 con Podman/Docker.
+---
 
-Análisis de ventajas e inconvenientes de cada opción:
+## 3. Arquitectura  
+AWS EC2 (Instancia Ubuntu)
+│
+├── Podman (Motor de contenedores)
+│   └── Contenedor Apache + Página Web
+│
+└── Acceso público por puerto 8080
 
-ECS/Fargate simplifican la gestión, pero requieren ampliar el plan de AWS y generan más coste.
+---
 
-EC2 + Podman ofrece mayor control, menor coste y encaja mejor con los requisitos del módulo.
+## 4. Instalación y configuración  
 
-Decisión final:
+### 4.1 Apertura de puertos  
+Antes de abrir la instancia se habilitó el **puerto 8080** en entrada y salida.
 
-Se opta por instancia EC2 + Podman para mantener el proyecto dentro del presupuesto y tener control total del entorno.
+### 4.2 Preparación de la carpeta de la página  
+Se revisó la carpeta donde se encontraba la página web a desplegar.
 
-Configuración inicial:
+### 4.3 Creación del Dockerfile  
+Dockerfile sencillo basado en Apache, incluyendo la carpeta de la página.
 
-Apertura del puerto 8080 en reglas de entrada y salida del Security Group.
+### 4.4 Construcción del contenedor  
+Se construyó la imagen con Podman incluyendo la página web.
 
-Preparación del entorno para comenzar el despliegue.
+### 4.5 Ejecución del contenedor  
+Se ejecutó el contenedor exponiendo el puerto 8080.
 
- Martes — Preparación del proyecto web y creación del Dockerfile
-Objetivos del día:
+### 4.6 Comprobaciones  
+- Se verificó que el contenedor estaba en ejecución.  
+- Se accedió mediante la IP pública de la instancia.  
+- Se confirmó que la página cargaba correctamente.  
 
-Organizar los archivos de la página web.
+---
 
-Crear el Dockerfile necesario para el contenedor.
+## 5. Problemas encontrados  
 
-Tareas realizadas:
+### 5.1 Validación del origen de la página  
+Para demostrar que la página se servía desde el contenedor y no desde Apache del host:  
+- Se ejecutaron comandos dentro del contenedor.  
+- Se comprobó que el directorio de Apache del host solo tenía la página por defecto.
 
-Revisión de la carpeta del proyecto web dentro de la instancia.
+---
 
-Creación del Dockerfile basado en Apache HTTPD:
+## 6. Gestión del contenedor  
 
-dockerfile
-FROM docker.io/library/httpd:2.4
-COPY . /usr/local/apache2/htdocs/
-Verificación de que todos los archivos HTML, CSS, imágenes y scripts están correctamente ubicados.
+### 6.1 Comandos utilizados  
+- Construcción de imagen  
+- Listado de contenedores  
+- Ejecución  
+- Inspección del contenedor  
 
- Miércoles — Construcción y ejecución del contenedor
-Objetivos del día:
+### 6.2 Acceso web  
+http://IP_PUBLICA:8080
 
-Construir la imagen.
+---
 
-Crear y ejecutar el contenedor.
+## 7. Monitorización  
+La monitorización se realizó manualmente mediante comandos de Podman para verificar:  
+- Estado del contenedor  
+- Puertos expuestos  
+- Logs básicos  
 
-Verificar su funcionamiento.
+---
 
-Tareas realizadas:
+## 8. Conclusiones  
 
-Construcción de la imagen con Podman:
+### 8.1 Ventajas de usar contenedores en la nube  
+- No es necesario gestionar servidores físicos.  
+- Escalado automático según carga (si se usara ECS/Fargate).  
+- Integración con balanceadores, seguridad y monitorización.  
+- Despliegue más ágil y flexible.  
 
-Código
-podman build -t proyecto5 .
-Comprobación de que la imagen se creó correctamente.
+### 8.2 Motivo de elegir EC2 + Podman  
+- Mayor control del entorno.  
+- Menor coste.  
+- Evitar ampliar el plan de AWS.  
 
-Ejecución del contenedor:
+---
 
-Código
-podman start proyecto_5_container
-Verificación del estado del contenedor:
+## 9. Tecnologías utilizadas  
+| Tecnología | Uso |
+|-----------|------|
+| AWS EC2 | Infraestructura |
+| Podman | Motor de contenedores |
+| Apache | Servidor web dentro del contenedor |
+| Dockerfile | Construcción de la imagen |
+| Ubuntu Server | Sistema base |
 
-Código
-podman ps
-Comprobación del puerto 8080 escuchando:
+---
 
-Código
-ss -tulpn | grep 8080
- Jueves — Pruebas finales y demostración
-Objetivos del día:
-
-Validar que el contenedor sirve la web correctamente.
-
-Demostrar que la página proviene del contenedor y no del Apache del sistema.
-
-Tareas realizadas:
-
-Acceso a la web mediante la IP pública de la instancia:
-
-Código
-http://<IP_PUBLICA>:8080
-Visualización correcta de la página.
-
-Prueba de que el contenedor es quien sirve la web:
-
-Comprobación del proceso escuchando en el puerto 8080.
-
-Revisión del directorio /var/www/html para confirmar que Apache local solo tiene la página por defecto.
-
-Conclusión del día:
-
-El despliegue funciona correctamente.
-
-Se demuestra que el contenedor es el responsable del servicio web.
-
-Se recopilan capturas y datos para el análisis comparativo final.
+## 📝 Nota final  
+**En los dos primeros días (lunes y martes)** se estudió:  
+- El funcionamiento de los contenedores en la nube.  
+- Las distintas formas de implementarlos en AWS.  
+- Se eligió la opción más directa y permisiva en costes: **EC2 + Podman**.
