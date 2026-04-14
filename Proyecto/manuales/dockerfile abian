@@ -1,0 +1,7 @@
+FROM docker.io/library/httpd:2.4
+
+# Copamos todo el contenido del proyecto al directorio web de Apache
+COPY . /usr/local/apache2/htdocs/
+
+# Opcional: si quieres activar mod_rewrite (no suele hacer falta para sitios estáticos)
+# RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
